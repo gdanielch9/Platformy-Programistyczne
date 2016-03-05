@@ -16,6 +16,8 @@ namespace zycie
     {
         public int[,] Tab;          // Plansza glowna
         public int[,] Tab2;         // Plansza pomocnicza
+        public int X { get; set; }  // Liczba wierszy
+        public int Y { get; set; }  // Liczba kolumn
 
         /*
         Ustala rozmiar planszy.
@@ -35,6 +37,8 @@ namespace zycie
 
             Tab = new int[x, (int)y];
             Tab2 = new int[x, (int)y];
+            X = x;
+            Y = (int)y;
         }
 
         /*
@@ -43,9 +47,9 @@ namespace zycie
         public void Generuj()
         {
             Random rand = new Random();
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < X; ++i)
             {
-                for (int j = 0; j < 20; ++j)
+                for (int j = 0; j < Y; ++j)
                 {
                     Tab[i, j] = rand.Next(0,2);
                 }
@@ -57,9 +61,9 @@ namespace zycie
         */
         public void Wyswietl()
         {
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < X; ++i)
             {
-                for (int j = 0; j < 20; ++j)
+                for (int j = 0; j < Y; ++j)
                 {
                     Console.Write(Tab[i, j] + " ");
                 }
@@ -73,9 +77,9 @@ namespace zycie
         public void Iteracja()
         {
             int Sasiedzi = 0;       // liczba sasiadow analizowanej komorki
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < X; ++i)
             {
-                for (int j = 0; j < 20 ; ++j)
+                for (int j = 0; j < Y ; ++j)
                 {
                     int Zm = Tab[i, j];
 
@@ -87,22 +91,22 @@ namespace zycie
                         if (i != 0) if (Tab[i - 1, j] == 1)
                             Sasiedzi += 1;
 
-                        if (i != 0 && j != 19) if( Tab[i - 1, j + 1] == 1)
+                        if (i != 0 && j != Y-1) if( Tab[i - 1, j + 1] == 1)
                             Sasiedzi += 1;
 
-                        if (j != 19) if(Tab[i, j + 1] == 1)
+                        if (j != Y - 1) if(Tab[i, j + 1] == 1)
                             Sasiedzi += 1;
 
                         if (j != 0) if( Tab[i, j - 1] == 1)
                             Sasiedzi += 1;
 
-                        if (i != 19 && j != 19) if (Tab[i + 1, j + 1] == 1)
+                        if (i != X - 1 && j != Y - 1) if (Tab[i + 1, j + 1] == 1)
                             Sasiedzi += 1;
 
-                        if (i != 19) if( Tab[i + 1, j] == 1) 
+                        if (i != X - 1) if( Tab[i + 1, j] == 1) 
                             Sasiedzi += 1;
 
-                        if (i != 19 && j != 0) if (Tab[i + 1, j - 1] == 1)
+                        if (i != X - 1 && j != 0) if (Tab[i + 1, j - 1] == 1)
                             Sasiedzi += 1;
 
                         Tab2[i, j] = Tab[i, j];
@@ -119,9 +123,9 @@ namespace zycie
                 }
             }
             
-            for (int i = 0; i < 20; ++i)
+            for (int i = 0; i < X; ++i)
             {
-                for (int j = 0; j < 20; ++j)
+                for (int j = 0; j < Y; ++j)
                 {
                     Tab[i, j] = Tab2[i, j];
                 }
@@ -134,7 +138,7 @@ namespace zycie
         static void Main(string[] args)
         {
             ConsoleKeyInfo klawisz;
-            Plansza Obj = new Plansza(20,20);
+            Plansza Obj = new Plansza(20,30);
             Obj.Generuj();
                         
             while (true)
